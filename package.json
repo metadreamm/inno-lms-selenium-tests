@@ -1,0 +1,8 @@
+{
+  "name": "inno-lms-selenium-tests",
+  "private": true,
+  "workspaces": [
+    "task1_steamAbout",
+    "task2_steamGetTopSellers"
+  ]
+}
