@@ -1,0 +1,16 @@
+{
+  "name": "task2_steamgettopsellers",
+  "version": "1.0.0",
+  "main": "steam-get-top-sellers.test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chromedriver": "^143.0.3",
+    "selenium-webdriver": "^4.39.0"
+  }
+}
