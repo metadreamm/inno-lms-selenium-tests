@@ -44,8 +44,10 @@ async function testSendingForm() {
     dateOfBirth: { day: "27", month: "May", year: 2004 },
     subjects: ["Maths", "English", "Social"],
     hobbies: ["Sports", "Music"],
-    address: "Warsaw, Poland",
+    address: "F 12, Main",
     picture: path.resolve(__dirname, "sample.jpg"),
+    state: "NCR",
+    city: "Delhi",
   };
 
   const genderIdByValiue = {
@@ -66,6 +68,11 @@ async function testSendingForm() {
     // 1. Go to website
     await driver.get("https://demoqa.com/automation-practice-form");
 
+    //
+    await driver.executeScript(`
+      document.querySelectorAll('iframe[id^="google_ads_iframe"]').forEach(el => 
+        el.remove());`);
+
     // 2. Fill all fields and attach some picture
 
     // Fill fields
@@ -78,7 +85,14 @@ async function testSendingForm() {
       .findElement(By.css(`label[for="${genderIdByValiue[data.gender]}"]`))
       .click();
 
-    await driver.findElement(By.id("userNumber")).sendKeys(data.phoneNumber);
+    // Phone Number
+    //
+    const phoneInput = await driver.findElement(By.id("userNumber"));
+    await driver.executeScript("arguments[0].scrollIntoView({block:'center'});", phoneInput);
+    await phoneInput.sendKeys(data.phoneNumber);
+
+    // OLD (maybe to be removed)
+    // await driver.findElement(By.id("userNumber")).sendKeys(data.phoneNumber);
 
     // Date of Birth (calendar)
     await setDateOfBirth(driver, data.dateOfBirth);
@@ -94,6 +108,7 @@ async function testSendingForm() {
         By.css(`label[for="${hobbiesIdByValue[h]}"]`)
       );
 
+      //
       await driver.executeScript(
         "arguments[0].scrollIntoView({block:'center'});",
         hobbyLabel
@@ -102,7 +117,30 @@ async function testSendingForm() {
       await hobbyLabel.click();
     }
 
-    await driver.sleep(10000); // to be removed
+    // Picture
+    await driver.findElement(By.id("uploadPicture")).sendKeys(data.picture);
+
+    // Current Address
+    await driver.findElement(By.id("currentAddress")).sendKeys(data.address);
+
+    // State and City
+  
+    // State
+    const stateInput = await driver.findElement(By.id("react-select-3-input"));
+    await stateInput.sendKeys(data.state);
+    // Enter to select
+    await stateInput.sendKeys("\n");
+
+    // City
+    const cityInput = await driver.findElement(By.id("react-select-4-input"));
+    await cityInput.sendKeys(data.city);
+    await cityInput.sendKeys("\n");
+
+    // 3. Click Submit button
+    await driver.findElement(By.id("submit")).click();
+
+    await driver.sleep(20000); // to be removed
+
   } finally {
     await driver.quit();
   }
