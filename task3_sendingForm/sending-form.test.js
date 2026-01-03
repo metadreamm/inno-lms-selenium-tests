@@ -1,3 +1,10 @@
+/*
+1. Go to the https://demoqa.com/automation-practice-form
+2. Fill all fields and attach some picture
+3. Click Submit button
+4. Make sure all the data that appears in the modal window is correct and matches what you entered
+*/
+
 const { Builder, By, until } = require("selenium-webdriver");
 
 const path = require("path");

@@ -1,3 +1,10 @@
+/*
+1. Open the Steam home page
+2. Click on the "About" button
+3. Check to see if you've reached the page.
+4. Compare the number of players. There are more players online than players in the game
+*/
+
 const { Builder, By, until } = require("selenium-webdriver");
 
 function parseNumber(text) {
